@@ -3,7 +3,7 @@
                "https://w3c.github.io/wot/w3c-wot-common-context.jsonld"],
   "@type": ["Sensor"],
   "name": "myTempSensor",
-  "base" : "http://gateway.webofthings.io",
+  "base" : "http://gateway.webofthings.io/",
   "interaction": [
     {
       "@type": ["Property","Temperature"],
@@ -21,13 +21,13 @@
     }, 
     {
       "@type": ["Property","Humidity"],
-      "name": "/properties/humidity",
+      "name": "myHumidity",
       "schema": { 
         "type": "number"
       },
       "writable": true,
          "form": [{
-          "href" : "thr",
+          "href" : "/properties/humidity",
           "mediaType": "application/json"
       }]
     },
