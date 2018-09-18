@@ -15,7 +15,7 @@
       "writable": false,
       "observable": true,
       "form": [{
-          "href" : "/properties/temperature",
+          "href" : "properties/temperature",
           "mediaType": "application/json"
       }]
     }, 
@@ -27,7 +27,7 @@
       },
       "writable": true,
          "form": [{
-          "href" : "/properties/humidity",
+          "href" : "properties/humidity",
           "mediaType": "application/json"
       }]
     },
