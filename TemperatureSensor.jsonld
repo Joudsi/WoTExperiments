@@ -3,7 +3,7 @@
                "https://w3c.github.io/wot/w3c-wot-common-context.jsonld"],
   "@type": ["Sensor"],
   "name": "myTempSensor",
-  "base" : "coap:///www.example.com:5683/temp/",
+  "base" : "coap://www.example.com:5683/temp/",
   "interaction": [
     {
       "@type": ["Property","Temperature"],
