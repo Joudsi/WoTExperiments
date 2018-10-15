@@ -22,6 +22,7 @@ public class WoTService implements CommandLineRunner {
 	private JSONObject myJsonObject;
 
 	Map<String, String> dataMap;
+	Map<String, Map<String, String> > dataMapAll = new HashMap<>();
 
 	public List<String> getWoTurl() {
 		System.out.println("this is the WoT Url Address from the properties file ");
@@ -79,11 +80,12 @@ public class WoTService implements CommandLineRunner {
 				System.out.println("url is :::: " + value);
 
 			}
+			dataMapAll.put(myJsonObject.getString("name"), dataMap);
 		}
 	}
 
-	public Map<String, String> getAllProperties() {
-		return dataMap; // Arrays.asList(dataMap)
+	public Map<String,Map<String, String>> getAllProperties() {
+		return dataMapAll; // Arrays.asList(dataMap)
 	}
 
 }

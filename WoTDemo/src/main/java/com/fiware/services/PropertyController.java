@@ -12,7 +12,7 @@ public class PropertyController {
 	private WoTService woTService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/properties")
-	public  Map<String, String> getAllProperties()  {
+	public  Map<String, Map<String, String>> getAllProperties()  {
 		return woTService.getAllProperties();
 	}
 	
