@@ -1,0 +1,78 @@
+{
+	"id": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+	"name": "WoTContextProvider",
+	"description": "",
+	"order": [
+		"7315f14c-ccf3-dfbb-a4fe-06b3c97d1792",
+		"bc768d67-bf83-8c78-be2a-a86553b66e99"
+	],
+	"folders": [
+		{
+			"name": "Thing",
+			"description": "",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"order": [],
+			"owner": "2392164",
+			"folders_order": [],
+			"id": "ee0ae47a-10db-d9f3-c270-0d8c187574e4"
+		}
+	],
+	"folders_order": [
+		"ee0ae47a-10db-d9f3-c270-0d8c187574e4"
+	],
+	"timestamp": 1538476994131,
+	"owner": "2392164",
+	"public": false,
+	"requests": [
+		{
+			"id": "7315f14c-ccf3-dfbb-a4fe-06b3c97d1792",
+			"headers": "",
+			"headerData": [],
+			"url": "localhost:8080/properties",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1539687248420,
+			"name": "properties",
+			"description": "",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"responses": []
+		},
+		{
+			"id": "bc768d67-bf83-8c78-be2a-a86553b66e99",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/query",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1539687244350,
+			"name": "QueryContext",
+			"description": "",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"responses": [],
+			"rawModeData": "{\n    \"entities\": [\n        {\n            \"type\": \"Store\",\n            \"isPattern\": \"false\",\n            \"id\": \"myTempSensor\"\n        }\n    ],\n    \"attributes\": [\n        \"myHumidity\"\n    ]\n}"
+		}
+	]
+}

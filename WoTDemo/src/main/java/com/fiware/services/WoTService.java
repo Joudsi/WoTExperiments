@@ -1,12 +1,17 @@
 package com.fiware.services;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +27,7 @@ public class WoTService implements CommandLineRunner {
 	private JSONObject myJsonObject;
 
 	Map<String, String> dataMap;
-	Map<String, Map<String, String> > dataMapAll = new HashMap<>();
+	Map<String, Map<String, String>> dataMapAll = new HashMap<>();
 
 	public List<String> getWoTurl() {
 		System.out.println("this is the WoT Url Address from the properties file ");
@@ -82,10 +87,67 @@ public class WoTService implements CommandLineRunner {
 			}
 			dataMapAll.put(myJsonObject.getString("name"), dataMap);
 		}
+		System.out.println(dataMapAll);
 	}
 
-	public Map<String,Map<String, String>> getAllProperties() {
+	public Map<String, Map<String, String>> getAllProperties() {
 		return dataMapAll; // Arrays.asList(dataMap)
+	}
+
+	public Map<String, String> getThingProperties(String id) {
+		// TODO Auto-generated method stub
+		
+	
+		Map<String,String> properties = new HashMap<>();
+		for (Entry<String, Map<String, String>> dma : dataMapAll.entrySet()) {
+			String key = dma.getKey();
+
+			if (key.equals(id)) {
+				properties = dma.getValue();
+			}
+		}
+		return properties;
+	}
+
+	public URL getpropertyURL(Map<String, String> thingPrperties, String property) throws IOException {
+		// TODO Auto-generated method stub
+		String propertyUrl= new String();
+		for (Entry<String, String> tp : thingPrperties.entrySet()) {
+			String key = tp.getKey();
+
+			if (key.equals(property)) {
+				propertyUrl = tp.getValue();
+			}
+		}
+		
+		URL url = new URL(propertyUrl);
+		
+		return url;
+	}
+
+	public String getPropertyValues(URL url) throws IOException {
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+      // optional default is GET
+      con.setRequestMethod("GET");
+      //add request header
+      con.setRequestProperty("Accept", "application/json"); //application/ld+json
+      int responseCode = con.getResponseCode();
+      System.out.println("\nSending 'GET' request to URL : " + url);
+      System.out.println("Response Code : " + responseCode);
+
+      BufferedReader in = new BufferedReader(
+              new InputStreamReader(con.getInputStream()));
+      String inputLine;
+      StringBuffer response = new StringBuffer();
+      while ((inputLine = in.readLine()) != null) {
+          response.append(inputLine);
+      }
+      in.close();
+
+      //print in String
+      System.out.println( "result of requesting this interaction" + response.toString());
+
+		return response.toString();
 	}
 
 }
