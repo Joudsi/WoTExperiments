@@ -8,7 +8,7 @@
     {
       "@type": ["Property","Temperature"],
       "reference": "threshold",
-      "name": "myTemp",
+      "name": "temperature",
       "schema":  { 
         "type": "number"
       },
@@ -21,7 +21,7 @@
     }, 
     {
       "@type": ["Property","Humidity"],
-      "name": "myHumidity",
+      "name": "relativeHumidity",
       "schema": { 
         "type": "number"
       },

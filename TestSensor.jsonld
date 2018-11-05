@@ -8,7 +8,7 @@
     {
       "@type": ["Property","Temperature"],
       "reference": "threshold",
-      "name": "myTemp",
+      "name": "temperature",
       "schema":  { 
         "type": "number"
       },
