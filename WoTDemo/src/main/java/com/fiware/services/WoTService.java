@@ -125,7 +125,7 @@ public class WoTService implements CommandLineRunner {
 		return url;
 	}
 
-	public String getPropertyValues(URL url) throws IOException {
+	public String getPropertyLatestValue(URL url, String property) throws IOException {
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
       // optional default is GET
       con.setRequestMethod("GET");
@@ -146,8 +146,24 @@ public class WoTService implements CommandLineRunner {
 
       //print in String
       System.out.println( "result of requesting this interaction" + response.toString());
+      
+      
+      JSONArray jA = new JSONArray(response.toString());
+      JSONObject latestValueJO = jA.getJSONObject(0);
+     
+      
+	Object ret = null;
+	if (property.equals("temperature")) {
+    	  System.out.println(latestValueJO.get("t"));
+    	  ret  = latestValueJO.get("t");
+	}
+      if (property.equals("humedity")) {
+    	  System.out.println(latestValueJO.get("h"));
+    	  ret = latestValueJO.get("h");
+	}
 
-		return response.toString();
+//		return response.toString();
+      return ret.toString();
 	}
 
 }

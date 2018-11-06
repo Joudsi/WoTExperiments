@@ -1,13 +1,22 @@
 package com.fiware.services;
 
+import java.awt.List;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.swing.text.html.parser.Entity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,14 +30,17 @@ public class PropertyController {
 		return woTService.getAllProperties();
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/query")
-	public Object addProperty(@RequestBody Map<String, ArrayList<Object>> payload) throws Exception {
+	@RequestMapping(method = RequestMethod.POST, value = "/queryContext")
+	public String addProperty(@RequestBody Map<String, ArrayList<Object>> payload) throws Exception {
 
 		String id = new String();
+		String type = new String();
 		String property = new String();
 		
-		System.out.println(payload);
 		
+		System.out.println("here is the payload");
+		System.out.println(payload);
+
 		for (Entry<String, ArrayList<Object>> en : payload.entrySet()) {
 			String key = en.getKey();
 
@@ -38,7 +50,9 @@ public class PropertyController {
 				for (int i = 0; i < entityInfo.size(); i++) {
 					Map<String, String> entityinfoMap = (Map<String, String>) entityInfo.get(i);
 					id = entityinfoMap.get("id");
+					type = entityinfoMap.get("type");
 					System.out.println(id);
+					System.out.println(type);
 				}
 
 			}
@@ -53,13 +67,59 @@ public class PropertyController {
 			}
 
 		}
-		
+
 		Map<String, String> thingPrperties = woTService.getThingProperties(id);
 		System.out.println(thingPrperties);
 		URL url = woTService.getpropertyURL(thingPrperties, property);
 		System.out.print(url);
-		return woTService.getPropertyValues(url);
 		
+//		adjust the output to be NGSI v1 compatible  - needs to be in a seperate method
+
+		JSONObject jo1 = new JSONObject();
+		JSONObject jo2 = new JSONObject();
+		JSONObject jo22 = new JSONObject();
+		JSONObject jo = new JSONObject();
+		JSONObject jsonResponse = new JSONObject();
+
+		JSONArray ja1 = new JSONArray();
+		JSONArray ja = new JSONArray();
+
+		jo1.put("name", property);
+		jo1.put("type", type);
+		jo1.put("value", woTService.getPropertyLatestValue(url, property));
+
+		ja1.put(jo1);
+
+		jo2.put("attributes", ja1);
+		jo2.put("id", id);
+		jo2.put("isPattern", "false");
+		jo2.put("type", "Product");
+
+		jo22.put("code", HttpStatus.OK);
+		jo22.put("reasonPhrase", "OK");
+
+		jo.put("contextElement", jo2);
+		jo.put("statusCode", jo22);
+
+		ja.put(jo);
+
+		jsonResponse.put("contextResponses", ja);
+
+		return jsonResponse.toString();
+		
+//		return woTService.getPropertyLatestValue(url, property);
+
 	}
 
 }
+
+//JSONObject jo111 = new JSONObject();
+//JSONObject jo222 = new JSONObject();
+//jo111.put("type", "Number");
+//jo111.put("value", "23");
+//jo111.put("metadata", "");
+//jo222.put("MyTemp",jo111);
+//return jo222.toString();
+
+//return woTService.getPropertyValues(url);
+//return new ResponseEntity<Object>(jsonResponse, HttpStatus.OK);

@@ -1,0 +1,46 @@
+version: "3.1"
+services:
+  mongo-db:
+    image: mongo:3.6
+    hostname: mongo-db
+    container_name: db-mongo
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+    networks:
+     - default
+    command: --bind_ip_all --smallfiles
+    volumes:
+      - mongo-db:/data
+
+  orion:
+    image: fiware/orion
+    hostname: orion
+    container_name: fiware-orion
+    depends_on:
+      - mongo-db
+    networks:
+     - default
+    expose:
+      - "1026"
+    ports:
+      - "1026:1026"
+    links:
+      - wot
+    command: -dbhost mongo-db -logLevel DEBUG
+
+  wot:
+    image: wotcp
+    hostname: wotcp
+    container_name: wotcp
+    networks:
+     - default
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+  
+volumes:
+  mongo-db:
+
