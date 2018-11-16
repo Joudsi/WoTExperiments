@@ -2,23 +2,51 @@
 	"id": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
 	"name": "WoTContextProvider",
 	"description": "",
-	"order": [
-		"7315f14c-ccf3-dfbb-a4fe-06b3c97d1792",
-		"bc768d67-bf83-8c78-be2a-a86553b66e99"
-	],
+	"order": [],
 	"folders": [
+		{
+			"id": "c9970e77-ee88-cd83-a397-fb1f3e1ef235",
+			"name": "Context Provider Registration Actions copy",
+			"description": "All Context Provider Registration actions take place on the `v2/registrations` endpoint. The standatd CRUD mappings apply:\n\n* Creation is mapped to the HTTP POST\n* Reading/Listing registrations to HTTP GET verb\n* Deletion is mapped to HTTP DELETE",
+			"order": [
+				"ff823901-1b6b-8a58-3bac-fcdbefb6aba1",
+				"d2af6229-294e-6f16-fb32-bddd8d565a01",
+				"96d1053f-9200-db24-2fca-1488c4dc70bb",
+				"88439b81-c0bf-1a03-4837-c1790ae63aa1"
+			],
+			"folders_order": [],
+			"owner": "2392164",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48"
+		},
+		{
+			"name": "EntityCreation",
+			"description": "",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"order": [
+				"ec451b40-4632-bce2-bfdf-6a1b11e6a810",
+				"a1ec3c37-80a5-b038-5781-67083b7683a3"
+			],
+			"owner": "2392164",
+			"folders_order": [],
+			"id": "c5d46ec5-4bb9-c7e2-20b2-ceaccfede6ba"
+		},
 		{
 			"name": "Thing",
 			"description": "",
 			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
-			"order": [],
+			"order": [
+				"7315f14c-ccf3-dfbb-a4fe-06b3c97d1792",
+				"bc768d67-bf83-8c78-be2a-a86553b66e99"
+			],
 			"owner": "2392164",
 			"folders_order": [],
 			"id": "ee0ae47a-10db-d9f3-c270-0d8c187574e4"
 		}
 	],
 	"folders_order": [
-		"ee0ae47a-10db-d9f3-c270-0d8c187574e4"
+		"ee0ae47a-10db-d9f3-c270-0d8c187574e4",
+		"c5d46ec5-4bb9-c7e2-20b2-ceaccfede6ba",
+		"c9970e77-ee88-cd83-a397-fb1f3e1ef235"
 	],
 	"timestamp": 1538476994131,
 	"owner": "2392164",
@@ -26,9 +54,22 @@
 	"requests": [
 		{
 			"id": "7315f14c-ccf3-dfbb-a4fe-06b3c97d1792",
-			"headers": "",
-			"headerData": [],
-			"url": "localhost:8080/properties",
+			"headers": "//Accept: application/json\n//Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://localhost:8080/properties",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -39,24 +80,112 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1539687248420,
+			"time": 1540838199408,
 			"name": "properties",
 			"description": "",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"responses": [],
+			"isFromCollection": true,
+			"collectionRequestId": "7315f14c-ccf3-dfbb-a4fe-06b3c97d1792",
+			"folder": "ee0ae47a-10db-d9f3-c270-0d8c187574e4"
+		},
+		{
+			"id": "88439b81-c0bf-1a03-4837-c1790ae63aa1",
+			"name": "Remove a registered content provider",
+			"description": "This example removes the registration with the id `5ad5b9435c28633f0ae90671` from the context.\n\nRegistrations can be deleted by making a DELETE request to the `/v2/registrations/<entity>` endpoint.\n\n---\nSubsequent requests using the same `id` will result in an error response since the entity no longer exists",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"method": "DELETE",
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"pathVariables": {},
+			"url": "http://{{orion}}/v2/registrations/5ad5b9435c28633f0ae90671?",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "Store",
+					"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id",
+					"enabled": false
+				},
+				{
+					"key": "attrs",
+					"value": "name",
+					"description": "Ordered list of attribute names to display",
+					"enabled": false
+				}
+			],
+			"headerData": [],
+			"collection_id": "15afaa1b-3af6-87ee-d3a1-5b3a163a10ef",
+			"folder": "c9970e77-ee88-cd83-a397-fb1f3e1ef235"
+		},
+		{
+			"id": "96d1053f-9200-db24-2fca-1488c4dc70bb",
+			"name": "List all registered content providers",
+			"description": "This example lists all registered context providers\n\nFull context data  for a specified entity type can be retrieved by making a GET request to the `/v2/registrations/` endpoint.",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"method": "GET",
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"pathVariables": {},
+			"url": "http://{{orion}}/v2/registrations?",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "Store",
+					"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id",
+					"enabled": false
+				}
+			],
+			"headerData": [],
+			"collection_id": "15afaa1b-3af6-87ee-d3a1-5b3a163a10ef",
+			"folder": "c9970e77-ee88-cd83-a397-fb1f3e1ef235"
+		},
+		{
+			"id": "a1ec3c37-80a5-b038-5781-67083b7683a3",
+			"headers": "",
+			"headerData": [],
+			"url": "http://{{orion}}/v2/entities/Sensor2",
+			"folder": "c5d46ec5-4bb9-c7e2-20b2-ceaccfede6ba",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1541158463235,
+			"name": "Obtain Entity Information",
+			"description": "This example reads the full context from the **Store** entity with the `id=urn:ngsi-ld:Store:001`.\n\nThe `relativeHumidity` attribute is returned as part of the context for the entity because a context provider has been registered to provide that data.",
 			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
 			"responses": []
 		},
 		{
 			"id": "bc768d67-bf83-8c78-be2a-a86553b66e99",
-			"headers": "Content-Type: application/json\n",
+			"headers": "Content-Type: application/json\nAccept: application/json\n",
 			"headerData": [
 				{
 					"key": "Content-Type",
 					"value": "application/json",
 					"description": "",
 					"enabled": true
+				},
+				{
+					"key": "Accept",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
 				}
 			],
-			"url": "localhost:8080/query",
+			"url": "localhost:8080/queryContext",
+			"folder": "ee0ae47a-10db-d9f3-c270-0d8c187574e4",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -67,12 +196,117 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1539687244350,
+			"time": 1541593548514,
 			"name": "QueryContext",
 			"description": "",
 			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
 			"responses": [],
-			"rawModeData": "{\n    \"entities\": [\n        {\n            \"type\": \"Store\",\n            \"isPattern\": \"false\",\n            \"id\": \"myTempSensor\"\n        }\n    ],\n    \"attributes\": [\n        \"myHumidity\"\n    ]\n}"
+			"rawModeData": "\t{\n    \"entities\": [\n        {\n            \"type\": \"Product\",\n            \"isPattern\": \"false\",\n            \"id\": \"Sensor2\"\n        }\n    ],\n    \"attributes\": [\n        \"temperature\"\n    ]\n}"
+		},
+		{
+			"id": "d2af6229-294e-6f16-fb32-bddd8d565a01",
+			"name": "Read a registered content provider",
+			"description": "This example reads  the registration data with the id `5addeffd93e53f86d8264521` from the context.\n\nRegistration data can be obtained by making a GET request to the `/v2/registrations/<entity>` endpoint.",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"method": "GET",
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"pathVariables": {},
+			"url": "http://{{orion}}/v2/registrations/5addeffd93e53f86d8264521?",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "Store",
+					"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id",
+					"enabled": false
+				},
+				{
+					"key": "attrs",
+					"value": "name",
+					"description": "Ordered list of attribute names to display",
+					"enabled": false
+				}
+			],
+			"headerData": [],
+			"collection_id": "15afaa1b-3af6-87ee-d3a1-5b3a163a10ef",
+			"folder": "c9970e77-ee88-cd83-a397-fb1f3e1ef235"
+		},
+		{
+			"id": "ec451b40-4632-bce2-bfdf-6a1b11e6a810",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{orion}}/v2/entities/",
+			"folder": "c5d46ec5-4bb9-c7e2-20b2-ceaccfede6ba",
+			"queryParams": [],
+			"preRequestScript": "",
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1540883133681,
+			"name": "Create a New Data Entity copy",
+			"description": "This example adds a new **Product** entity to the context.\n\nNew entities can be added by making a POST request to the `/v2/entities/` endpoint.\n\nThe request will **fail** if any of the attributes already exist in the context.\n\nAny entity must have a `id` and `type` attributes, each additional attributes are optional \nand will depend on the system being described. Each additional attribute should also have a \ndefined `type` and a `value` attribute. The product has been assigned a unique `id` following\nthe NGSI-LD  [draft recommendation](https://docbox.etsi.org/ISG/CIM/Open/ISG_CIM_NGSI-LD_API_Draft_for_public_review.pdf)  and has been assigned `type=Product`.\n\n---\nSubsequent requests using the same `id` will result in an error response.",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"isFromCollection": true,
+			"collectionRequestId": "2b110dde-2e7c-f887-4af6-c0b2f27e89f3",
+			"rawModeData": " {\n      \"id\":\"Sensor2\",\n      \"type\":\"Product\",\n      \"name\": {\n      \t\"type\":\"Text\",\n      \"value\":\"Sensor2\"\n      },\n      \"MyTemp\":{\n      \t\"type\":\"Number\",\n      \t\"value\": 99\n      }\n}"
+		},
+		{
+			"id": "ff823901-1b6b-8a58-3bac-fcdbefb6aba1",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{orion}}/v2/registrations?",
+			"folder": "c9970e77-ee88-cd83-a397-fb1f3e1ef235",
+			"queryParams": [
+				{
+					"key": "type",
+					"value": "Store",
+					"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id",
+					"enabled": false
+				},
+				{
+					"key": "attrs",
+					"value": "name",
+					"description": "Ordered list of attribute names to display",
+					"enabled": false
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1541446784902,
+			"name": "Register a Context Provider",
+			"description": "This example registers the Random Data Context Provider with the Orion Context Broker.\n\nThe body of the request states that: *\"The URL* `http://context-provider:3000/proxy/v1/random/weatherConditions` *is capable of providing* `relativeHumidity`  and `temperature` *data for the entity called* `id=urn:ngsi-ld:Store:001`.*\"*\n\nThe values are **never** held within Orion, it is always requested on demand from the registered context provider. Orion merely holds the registration information about which context providers can offer context data.\n\nThe presence of the flag `\"legacyForwarding\": true` indicates that the registered context provider offers an NGSI v1 interface - therefore Orion  will make POST request for data on `http://context-provider:3000/proxy/v1/random/weatherConditions/queryContext` using the NGSI v1 format for the body, and expect to receive data in the NGSI v1 format in return.\n\nThis request will return with a **201 - Created** response code. The `Location` Header of the response contains a path to the registration record held in Orion.\n\n>*Note:* if you have registered with the Weather API, you can retrieve live values for `temperature` and `relativeHumidity` in Berlin by placing the following `url` in the `provider`:\n>\n> * `http://context-provider:3000/proxy/v1/weather/weatherConditions`\n>",
+			"collectionId": "e87740c8-3fa4-811b-38e9-53e1f4167d48",
+			"responses": [],
+			"rawModeData": "{\n   \"description\": \"Sensor2 web of Thing\",\n   \"dataProvided\": {\n     \"entities\": [\n       {\n         \"id\" : \"Sensor2\",\n         \"type\": \"Product\"\n       }\n     ],\n     \"attrs\": [\n     \t\"temperature\"\n    ]\n   },\n   \"provider\": {\n     \"http\": {\n       \"url\": \"http://localhost:8080\"\n     },\n     \"legacyForwarding\": true\n   },\n   \"status\": \"active\"\n}"
 		}
 	]
 }

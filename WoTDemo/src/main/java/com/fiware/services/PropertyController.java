@@ -2,6 +2,9 @@ package com.fiware.services;
 
 import java.awt.List;
 import java.net.URL;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -83,17 +86,34 @@ public class PropertyController {
 
 		JSONArray ja1 = new JSONArray();
 		JSONArray ja = new JSONArray();
+		
+		
+		JSONObject jomd = new JSONObject();
+//		JSONObject jomd1 = new JSONObject();
+		
+		JSONArray jamd = new JSONArray();
+		
+		
 
 		jo1.put("name", property);
-		jo1.put("type", type);
+		jo1.put("type", woTService.getPropertyType(id, property));
 		jo1.put("value", woTService.getPropertyLatestValue(url, property));
+		
+		
+		jomd.put("name", "timestamp");
+		jomd.put("type", "DateTime");
+		jomd.put("value", woTService.getPropertyLatestTimeStamp(property));
+		
+		jamd.put(jomd);
+		
+		jo1.put("metadatas", jamd);
 
 		ja1.put(jo1);
 
 		jo2.put("attributes", ja1);
 		jo2.put("id", id);
 		jo2.put("isPattern", "false");
-		jo2.put("type", "Product");
+		jo2.put("type", type);
 
 		jo22.put("code", HttpStatus.OK);
 		jo22.put("reasonPhrase", "OK");
@@ -113,13 +133,3 @@ public class PropertyController {
 
 }
 
-//JSONObject jo111 = new JSONObject();
-//JSONObject jo222 = new JSONObject();
-//jo111.put("type", "Number");
-//jo111.put("value", "23");
-//jo111.put("metadata", "");
-//jo222.put("MyTemp",jo111);
-//return jo222.toString();
-
-//return woTService.getPropertyValues(url);
-//return new ResponseEntity<Object>(jsonResponse, HttpStatus.OK);
