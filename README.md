@@ -1,6 +1,6 @@
 # WoTExperiments
 
-This repository shows a proof of concept for using the web of thing as a context provider in Orion Context Broker.  The application provided here is a Web of Things servient that has been integrated with Orion Context Broker.
+This repository shows a proof of concept that integrates Wob of Things through a Context Provider in Orion Context Broker.  The application provided here is a Web of Things servient that has been integrated with Orion Context Broker.
 
 ## Prerequisites
 
@@ -12,16 +12,16 @@ This repository shows a proof of concept for using the web of thing as a context
 
 Components for this software demo is described as follows:
 
-- Parser: it parses the Thing Descriptor (JSON-LD) provided in the as input config for the spring-boot application. The parser aims to retrieve the properties for each of the things described in each JSON-LD file with its accompanying details. Here we intend to store in a map data structure each property with its info about how to retrieve values for each. This process is done in the runtime of the application.
+- Parser: it parses the Thing Description (JSON-LD) provided in the as input config for the spring-boot application. The parser aims to retrieve the properties for each of the things described in each JSON-LD file with its accompanying details. Here we intend to store in a map data structure each property with its info about how to retrieve values for each. This process is done in the runtime of the application.
 
-- Web Service: The web service works as a REST-API to retrieve information about the Thing Descriptors. It extracts the values of each of the properties in an NGSI-V1 format to be compatible when queried by Orion Context Broker.
+- REST Service: The web service works as a REST-API to retrieve information about the Thing Descriptors. It extracts the values of each of the properties in an NGSI-V1 format to be compatible when queried by Orion Context Broker.
 
 - Postman is a RESTful- API client uses to query Orion Context broker.
 - Orion Context broker uses mongo to store its intermediate information
 
-For more information about the concept of context provider, please check this tutorial able [context provider](https://github.com/Fiware/tutorials.Context-Providers).
+For more information about the concept of Context Provider, please check this tutorial [Context Provider](https://github.com/Fiware/tutorials.Context-Providers).
 
-For more information about thing descriptor and JSON-LD, please check [W3C Thing Description specification](https://w3c.github.io/wot-thing-description/)
+For more information about Thing Description and JSON-LD, please check [W3C Thing Description specification](https://w3c.github.io/wot-thing-description/)
 
 ![](Architecture.jpg).
 
@@ -44,20 +44,20 @@ docker-compose orion up
 We can query the Thing Descriptor that has been provided and the properties for each by:
 
 ```console
-curl --request GET \ --url http://localhost:8080/properties 
+curl --request GET --url http://localhost:8080/properties 
 ```
 
-The response contains the name of each Thing Descriptor file, the properties described in each JSON-LD file and the address to get the values for each of the properties. Here we use the [WebOfThing Book Public API](http://gateway.webofthings.io/)
+The response contains the name of each Thing Description file, the properties described in each JSON-LD file and the address to get the values for each of the properties. Here we use the [http://gateway.webofthings.io/](http://gateway.webofthings.io/)
 
 
 ```json
 {
-    "Sensor2": {
+    "Room02": {
         "temperature": "http://gateway.webofthings.io/properties/temperature"
     },
-    "myTempSensor": {
-        "temperature": "http://gateway.webofthings.io/properties/temperature",
-        "relativeHumidity": "http://gateway.webofthings.io/properties/humidity"
+    "Room01": {
+        "myTemp": "http://gateway.webofthings.io/properties/temperature",
+        "myHumidity": "http://gateway.webofthings.io/properties/humidity"
     }
 }
 ```
@@ -69,12 +69,12 @@ curl --request POST \
   --url http://localhost:8080/queryContext \
   --header 'Accept: application/json' \
   --header 'Content-Type: application/json' \
-  --data '	{
+  --data '{
     "entities": [
         {
-            "type": "Product",
+            "type": "Room",
             "isPattern": "false",
-            "id": "Sensor2"
+            "id": "Room02"
         }
     ],
     "attributes": [
@@ -96,17 +96,17 @@ response
                             {
                                 "name": "timestamp",
                                 "type": "DateTime",
-                                "value": "2018-11-16T09:31:56.695Z"
+                                "value": "2018-11-20T10:08:31.171Z"
                             }
                         ],
                         "name": "temperature",
                         "type": "Number",
-                        "value": "15"
+                        "value": "6"
                     }
                 ],
-                "id": "Sensor2",
+                "id": "Room02",
                 "isPattern": "false",
-                "type": "Product"
+                "type": "Room"
             },
             "statusCode": {
                 "code": "200",
@@ -124,37 +124,34 @@ curl --request POST \
   --url 'http://{{orion}}/v2/entities/' \
   --header 'Content-Type: application/json' \
   --data ' {
-      "id":"Sensor2",
-      "type":"Product",
+      "id":"Room02",
+      "type":"Room",
       "name": {
-        "type":"Text",
-      "value":"Sensor2"
-      },
-      "MyTemp":{
-        "type":"Number",
-        "value": 99
+      	"type":"Text",
+      "value":"Room02"
       }
 }'
 ```
 
 ## Retrieve Entity Information
 
+the following request will retrieve the local entity in the Orion Context Broker
+
 ```console
- curl --request GET \ --url 'http://{{orion}}/v2/entities/Sensor2'
+ curl --request GET --url 'http://{{orion}/v2/entities/Room02'
 ```
 
 ```json
 
 {
-    "id": "Sensor2",
+    "id": "Room02",
     "type": "Product",
     "name": {
         "type": "Text",
-        "value": "Sensor2",
+        "value": "Room02",
         "metadata": {}
     }
 }
-
 ```
 
 ## Context Provider Registration
@@ -164,21 +161,21 @@ curl --request POST \
   --url 'http://{{orion}}/v2/registrations' \
   --header 'Content-Type: application/json' \
   --data '{
-   "description": "Sensor2 web of Thing",
+   "description": "Room02 - Web of Things",
    "dataProvided": {
      "entities": [
        {
-         "id" : "Sensor2",
-         "type": "Product"
+         "id" : "Room02",
+         "type": "Room"
        }
      ],
      "attrs": [
-        "name": "temperature"
+     	"temperature"
     ]
    },
    "provider": {
      "http": {
-       "url": "http://localhost:8080"
+       "url": "http://wotcp:8080"
      },
      "legacyForwarding": true
    },
@@ -189,8 +186,7 @@ curl --request POST \
 list all regestrations
 
 ```console
-curl --request GET \
-  --url 'http://{{orion}}/v2/registrations'
+curl -X GET --url http://localhost:1026/v2/registrations
 ```
 
 ```json
@@ -217,28 +213,27 @@ curl --request GET \
 }
 ```
 
-to check if the context provider is able to retrieve values.
+To check if the context provider is able to retrieve values. We can Notice here that we have the information for the Room's Temperature, whereas if we went back the example above where we retrieved the local entity, the information was only the information we have created inside the Orion Context Broker.
 
-curl --request GET \
-  --url 'http://{{orion}}/v2/entities/Sensor2'
+curl --request GET --url 'http://{{orion}}/v2/entities/Room02'
 
 ```json
 
 {
-    "id": "Sensor2",
-    "type": "Product",
+    "id": "Room02",
+    "type": "Room",
     "name": {
         "type": "Text",
-        "value": "Sensor2",
+        "value": "Room02",
         "metadata": {}
     },
     "temperature": {
         "type": "Number",
-        "value": "15",
+        "value": "40",
         "metadata": {
             "timestamp": {
                 "type": "DateTime",
-                "value": "2018-11-16T09:31:56.695Z"
+                "value": "2018-11-20T10:21:21.978Z"
             }
         }
     }
