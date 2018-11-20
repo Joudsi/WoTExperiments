@@ -1,0 +1,4 @@
+org/fiware/services/WoTService.class
+org/fiware/services/Property.class
+org/fiware/services/PropertyController.class
+org/fiware/WoTDemoApplication.class

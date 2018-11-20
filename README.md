@@ -156,6 +156,8 @@ the following request will retrieve the local entity in the Orion Context Broker
 
 ## Context Provider Registration
 
+In order to get information from the Web of Things you need to register Context provider in Orion Context Broker. Note that in the registration we put a url for the provider which is here the REST Service endpoint we described above.
+
 ```console
 curl --request POST \
   --url 'http://{{orion}}/v2/registrations' \
@@ -214,6 +216,8 @@ curl -X GET --url http://localhost:1026/v2/registrations
 ```
 
 To check if the context provider is able to retrieve values. We can Notice here that we have the information for the Room's Temperature, whereas if we went back the example above where we retrieved the local entity, the information was only the information we have created inside the Orion Context Broker.
+
+In this entity we got one more property (temprature) with its value, it is the same temperature value the Web of Thing is Providing.
 
 curl --request GET --url 'http://{{orion}}/v2/entities/Room02'
 
