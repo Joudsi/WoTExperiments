@@ -2,13 +2,13 @@
   "@context": ["https://w3c.github.io/wot/w3c-wot-td-context.jsonld",
                "https://w3c.github.io/wot/w3c-wot-common-context.jsonld"],
   "@type": ["Sensor"],
-  "name": "myTempSensor",
+  "name": "Room01",
   "base" : "http://gateway.webofthings.io/",
   "interaction": [
     {
       "@type": ["Property","Temperature"],
       "reference": "threshold",
-      "name": "temperature",
+      "name": "myTemp",
       "schema":  { 
         "type": "number"
       },
@@ -21,7 +21,7 @@
     }, 
     {
       "@type": ["Property","Humidity"],
-      "name": "relativeHumidity",
+      "name": "myHumidity",
       "schema": { 
         "type": "number"
       },
@@ -35,7 +35,7 @@
       "@type": ["Event"],
       "schema": { "type": "number" },
       "name": "myChange",
-      "property": "temp",
+      "property": "myTemp",
       "form": [{
           "href" : "val/changed",
           "mediaType": "application/json"

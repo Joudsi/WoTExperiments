@@ -2,7 +2,7 @@
   "@context": ["https://w3c.github.io/wot/w3c-wot-td-context.jsonld",
                "https://w3c.github.io/wot/w3c-wot-common-context.jsonld"],
   "@type": ["Sensor"],
-  "name": "Sensor2",
+  "name": "Room02",
   "base" : "http://gateway.webofthings.io/",
   "interaction": [
     {
@@ -23,7 +23,7 @@
       "@type": ["Event"],
       "schema": { "type": "number" },
       "name": "myChange",
-      "property": "temp",
+      "property": "temperature",
       "form": [{
           "href" : "val/changed",
           "mediaType": "application/json"
