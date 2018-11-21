@@ -39,9 +39,9 @@ docker-compose orion up
 ```
 
 
-## Thing Descriptor Information
+## Thing Description Information
 
-We can query the Thing Descriptor that has been provided and the properties for each by:
+We can query the Thing Description that has been provided and the properties for each by:
 
 ```console
 curl --request GET --url http://localhost:8080/properties 
